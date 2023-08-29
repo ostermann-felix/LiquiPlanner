@@ -17,10 +17,15 @@ const eintrag_erfassen = function() {
 
 eintrag_erfassen();
 
-console.log(`Titel: ${titel}
+const eintrag_ausgeben = function(titel, typ, betrag, datum) {
+    console.log(`Titel: ${titel}
             Buchungytyp: ${typ}
-            Betrag: ${betrag} ct
+            Betrag: ${betrag} € Cent
             Datum: ${datum}`);
+};
+
+eintrag_ausgeben(titel, typ, betrag, datum);
+
 
 let titel2 = prompt("Titel:");
 let typ2 = prompt("Typ (Einnahme oder Ausgabe):");
