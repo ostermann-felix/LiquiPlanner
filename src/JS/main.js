@@ -1,18 +1,26 @@
 "use strict";
 
-let einnahmen = 0;
-let ausgaben = 0;
-let bilanz = 0;
+let einnahmen = 0,
+    ausgaben = 0,
+    bilanz = 0,
+    titel, 
+    typ, 
+    betrag, 
+    datum;
 
-let titel = prompt("Titel:");
-let typ = prompt("Typ (Einnahme oder Ausgabe):");
-let betrag = parseInt(prompt("Betrag: (In Eurocent)"));
-let datum = prompt("Datum (JJJJ-MM-TT)");
+const eintrag_erfassen = function() {
+    titel = prompt("Titel:");
+    typ = prompt("Typ (Einnahme oder Ausgabe):");
+    betrag = parseInt(prompt("Betrag (in € Cent):"));
+    datum = prompt("Datum (JJJJ-MM-TT):")
+};
+
+eintrag_erfassen();
 
 console.log(`Titel: ${titel}
-Buchungytyp: ${typ}
-Betrag: ${betrag} ct
-Datum: ${datum}`);
+            Buchungytyp: ${typ}
+            Betrag: ${betrag} ct
+            Datum: ${datum}`);
 
 let titel2 = prompt("Titel:");
 let typ2 = prompt("Typ (Einnahme oder Ausgabe):");
