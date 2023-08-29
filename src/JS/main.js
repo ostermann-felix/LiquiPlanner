@@ -15,37 +15,38 @@ const eintrag_erfassen = function() {
     datum = prompt("Datum (JJJJ-MM-TT):")
 };
 
-eintrag_erfassen();
-
 const eintrag_ausgeben = function(titel, typ, betrag, datum) {
     console.log(`Titel: ${titel}
-            Buchungytyp: ${typ}
-            Betrag: ${betrag} € Cent
-            Datum: ${datum}`);
+Buchungytyp: ${typ}
+Betrag: ${betrag} € Cent
+Datum: ${datum}`);
 };
 
-eintrag_ausgeben(titel, typ, betrag, datum);
 
+const eintrag_mit_gesamtbilanz_verrechnen = function(typ, betrag)    {
+    if  (typ === "Einnahme")    {
+        einnahmen = einnahmen + betrag;
+        bilanz = bilanz + betrag;
+    }   else if (typ === "Ausgabe")    {
+        ausgaben = ausgaben + betrag;
+        bilanz = bilanz - betrag;
+    }   else    {
+        console.log(`Der Typ "${typ}" ist nicht bekannt.`);
+    }
+};
 
-let titel2 = prompt("Titel:");
-let typ2 = prompt("Typ (Einnahme oder Ausgabe):");
-let betrag2 = parseInt(prompt("Betrag: (In Eurocent)"));
-let datum2 = prompt("Datum (JJJJ-MM-TT)");
+const gesamtbilanz_ausgeben = function(einnahmen, ausgaben, bilanz)    {
+    console.log(`Bilanz: ${bilanz} € Cent
+Einnahmen: ${einnahmen} € Cent
+Ausgaben: ${ausgaben} € Cent
+ Bilanz ist positiv: ${bilanz >= 0}`)
+};
 
-if  (typ2 == "Einnahme")    {
-    einnahmen = einnahmen + betrag;
-    bilanz = bilanz + betrag2;
-}   else if (typ2 === "Ausgabe")    {
-    ausgaben = ausgaben + betrag2;
-    bilanz = bilanz + betrag2;
-}   else    {
-    console.log(`Der Typ "${typ2}" ist nicht bekannt.`);
-}
+const eintrag_hinzufuegen = function()  {
+    eintrag_erfassen();
+    eintrag_ausgeben(titel, typ, betrag, datum);
+    eintrag_mit_gesamtbilanz_verrechnen(typ, betrag);
+    gesamtbilanz_ausgeben(einnahmen, ausgaben, bilanz);
+};
 
-console.log(`Datum: ${datum2}
-Buchungytyp: ${typ2}
-Betrag: ${betrag2} ct
-Datum: ${datum2}`);
-
-//Gesamtbilanz
-console.log(`Bilanz: ${bilanz} ct`);
+eintrag_hinzufuegen();
