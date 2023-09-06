@@ -21,12 +21,17 @@ const haushaltsbuch = {
         );
     },
 
-    /* eintrag_ausgeben()  {
-        console.log(`Titel: ${this.neuer_eintrag.titel}
-                    Buchungytyp: ${this.neuer_eintrag.typ}
-                    Betrag: ${this.neuer_eintrag.betrag} € Cent
-                    Datum: ${this.neuer_eintrag.datum}`);
-    },
+    eintraege_ausgeben()  {
+        console.clear();
+        this.eintraege.forEach(function(eintrag) {
+            console.log(`Titel: ${eintrag.titel}\n`
+            + `Buchungytyp: ${eintrag.typ}\n`
+            + `Betrag: ${eintrag.betrag} € Cent\n`
+            + `Datum: ${eintrag.datum}`);
+        });
+    }  
+
+    /*
     eintrag_mit_gesamtbilanz_verrechnen ()  {
         switch (this.neuer_eintrag.typ) {
             case "Einnahme":
@@ -52,7 +57,7 @@ const haushaltsbuch = {
     */
     eintrag_hinzufuegen()   {
         this.eintrag_erfassen();
-        //this.eintrag_ausgeben();
+        this.eintraege_ausgeben();
         //this.eintrag_mit_gesamtbilanz_verrechnen();
         //this.gesamtbilanz_ausgeben();
     }
