@@ -54,19 +54,21 @@ const haushaltsbuch = {
         });
         this.gesamtbilanz = neue_gesamtbilanz;
     },
-/*
+
     gesamtbilanz_ausgeben() {
-        console.log(`Bilanz: ${this.gesamtbilanz.bilanz} € Cent
-                    Einnahmen: ${this.gesamtbilanz.einnahmen} € Cent
-                    Ausgaben: ${this.gesamtbilanz.ausgaben} € Cent
-                    Bilanz ist positiv: ${this.gesamtbilanz.bilanz >= 0}`)
+        console.log(`Bilanz: ${this.gesamtbilanz.bilanz} € Cent\n`
+        + `Einnahmen: ${this.gesamtbilanz.einnahmen} € Cent\n`
+        + `Ausgaben: ${this.gesamtbilanz.ausgaben} € Cent\n`
+        + `Bilanz ist positiv: ${this.gesamtbilanz.bilanz >= 0}`
+        );
     },
-    */
+
     eintrag_hinzufuegen()   {
         this.eintrag_erfassen();
         this.eintraege_ausgeben();
         this.gesamtbilanz_erstellen();
-        //this.gesamtbilanz_ausgeben();
+        this.gesamtbilanz_ausgeben();
+        
     }
 };
 
