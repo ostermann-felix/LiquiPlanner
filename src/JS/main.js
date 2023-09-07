@@ -29,9 +29,9 @@ const haushaltsbuch = {
             + `Betrag: ${eintrag.betrag} € Cent\n`
             + `Datum: ${eintrag.datum}`);
         });
-    }  
+    },  
 
-    gesamtbilanz_erstellen ()    {
+    gesamtbilanz_erstellen()    {
         let neue_gesamtbilanz = {
             bilanz: 0,
             einnahmen: 0,
