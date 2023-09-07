@@ -64,11 +64,14 @@ const haushaltsbuch = {
     },
 
     eintrag_hinzufuegen()   {
-        this.eintrag_erfassen();
-        this.eintraege_ausgeben();
-        this.gesamtbilanz_erstellen();
-        this.gesamtbilanz_ausgeben();
-        
+        let weiterer_eintrag = true;
+        while(weiterer_eintrag) {
+            this.eintrag_erfassen();
+            this.eintraege_ausgeben();
+            this.gesamtbilanz_erstellen();
+            this.gesamtbilanz_ausgeben();
+            weiterer_eintrag = confirm("Weiteren Eintrag hinzufügen?");
+        }
     }
 };
 
