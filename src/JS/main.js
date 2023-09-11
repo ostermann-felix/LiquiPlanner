@@ -15,9 +15,9 @@ const haushaltsbuch = {
 
     eintraege_sortieren()   {
         this.eintraege.sort(function(eintrag_a, eintrag_b)  {
-            if (eintrag_a.datum > eintrag_b.datum)  {
+            if (eintrag_a.get("datum") > eintrag_b.get("datum"))  {
                 return -1;
-            }   else if (eintrag_a.datum < eintrag_b.datum) {
+            }   else if (eintrag_a.get("datum") < eintrag_b.get("datum")) {
                 return 1;
             }   else {
                 return 0;
@@ -28,10 +28,10 @@ const haushaltsbuch = {
     eintraege_ausgeben()  {
         console.clear();
         this.eintraege.forEach(function(eintrag) {
-            console.log(`Titel: ${eintrag.titel}\n`
-            + `Buchungytyp: ${eintrag.typ}\n`
-            + `Betrag: ${eintrag.betrag} € Cent\n`
-            + `Datum: ${eintrag.datum}`);
+            console.log(`Titel: ${eintrag.get("titel")}\n`
+            + `Buchungytyp: ${eintrag.get("typ")}\n`
+            + `Betrag: ${eintrag.get("betrag")} € Cent\n`
+            + `Datum: ${eintrag.get("datum")}`);
         });
     },  
 
