@@ -1,24 +1,16 @@
 "use strict";
 
 const haushaltsbuch = {
-    gesamtbilanz: {
-        bilanz: 0,
-        einnahmen: 0,
-        ausgaben: 0,
-    },
-    eintraege: [
-
-    ],
+    gesamtbilanz: new Map(),
+    eintraege: [],
 
     eintrag_erfassen()  {
-        this.eintraege.push(
-            {
-            titel: prompt("Titel:"),
-            typ: prompt("Typ (Einnahme oder Ausgabe):"),
-            betrag: parseInt(prompt("Betrag (in € Cent):")),
-            datum: prompt("Datum (JJJJ-MM-TT):")
-            }
-        );
+        let neuer_eintrag = new Map();
+        neuer_eintrag.set("titel", prompt("Titel:"));
+        neuer_eintrag.set("typ", prompt("Typ (Einnahme oder Ausgabe):"));
+        neuer_eintrag.set("betrag", parseInt(prompt("Betrag (in € Cent):")));
+        neuer_eintrag.set("datum", prompt("Datum (JJJJ-MM-TT):"));
+        this.eintraege.push(neuer_eintrag);
     },
 
     eintraege_sortieren()   {
