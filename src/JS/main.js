@@ -36,23 +36,24 @@ const haushaltsbuch = {
     },  
 
     gesamtbilanz_erstellen()    {
-        let neue_gesamtbilanz = {
-            bilanz: 0,
-            einnahmen: 0,
-            ausgaben: 0
-        }
+        let neue_gesamtbilanz = new Map();
+        neue_gesamtbilanz.set("einnahmen", 0);
+        neue_gesamtbilanz.set("ausgaben", 0);
+        neue_gesamtbilanz.set("bilanz", 0);
+
         this.eintraege.forEach(function(eintrag)   {
-            switch (this.eintrag.typ) {
+            switch (this.eintrag.get("typ")) {
                 case "Einnahme":
-                    neue_gesamtbilanz.einnahmen += this.eintrag.betrag;
-                    neue_gesamtbilanz.bilanz += this.eintrag.betrag;
+                    neue_gesamtbilanz.set("einnahmen", neue_gesamtbilanz.get("einnahmen") + eintrag.get("betrag"));
+                    neue_gesamtbilanz.set("bilanz", neue_gesamtbilanz.get("bilanz") + eintrag.get("betrag"));
+                    neue_gesamtbilanz.bilanz += this.eintrag.get("betrag");
                     break;
                 case "Ausgabe":
-                    neue_gesamtbilanz.ausgaben -= this.eintrag.betrag;
-                    neue_gesamtbilanz.bilanz -= this.eintrag.betrag;
+                    neue_gesamtbilanz.set("ausgaben", neue_gesamtbilanz.get("ausgaben") + eintrag.get("betrag"));
+                    neue_gesamtbilanz.set("bilanz", neue_gesamtbilanz.get("bilanz") - eintrag.get("betrag"));
                     break;
                 default:
-                    console.log(`Der Typ "${this.eintrag.typ}" ist nicht bekannt.`);
+                    console.log(`Der Typ "${this.eintrag.get("typ")}" ist nicht bekannt.`);
                     break;
             }
         });
