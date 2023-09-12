@@ -2,6 +2,7 @@
 
 const haushaltsbuch = {
     gesamtbilanz: new Map(),
+    
     eintraege: [],
 
     eintrag_erfassen()  {
@@ -9,7 +10,7 @@ const haushaltsbuch = {
         neuer_eintrag.set("titel", prompt("Titel:"));
         neuer_eintrag.set("typ", prompt("Typ (Einnahme oder Ausgabe):"));
         neuer_eintrag.set("betrag", parseInt(prompt("Betrag (in € Cent):")));
-        neuer_eintrag.set("datum", prompt("Datum (JJJJ-MM-TT):"));
+        neuer_eintrag.set("datum", new Date(prompt("Datum (JJJJ-MM-TT):")));
         this.eintraege.push(neuer_eintrag);
     },
 
