@@ -32,7 +32,11 @@ const haushaltsbuch = {
             console.log(`Titel: ${eintrag.get("titel")}\n`
             + `Buchungytyp: ${eintrag.get("typ")}\n`
             + `Betrag: ${eintrag.get("betrag")} € Cent\n`
-            + `Datum: ${eintrag.get("datum")}`);
+            + `Datum: ${eintrag.get("datum").toLocalDateString("de-DE", {
+                year: "numeric",
+                month: "long",
+                day: "2-digit"
+            })}`);
         });
     },  
 
