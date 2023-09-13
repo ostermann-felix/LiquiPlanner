@@ -9,10 +9,14 @@ const haushaltsbuch = {
         let neuer_eintrag = new Map();
         neuer_eintrag.set("titel", prompt("Titel:"));
         neuer_eintrag.set("typ", prompt("Typ (Einnahme oder Ausgabe):"));
-        neuer_eintrag.set("betrag", parseInt(prompt("Betrag (in € Cent):")));
+        neuer_eintrag.set("betrag", this.betrag_verarbeiten(parseInt(prompt("Betrag (€):"))));
         neuer_eintrag.set("datum", new Date(prompt("Datum (JJJJ-MM-TT):")));
         neuer_eintrag.set("timestamp", Date.now());
         this.eintraege.push(neuer_eintrag);
+    },
+
+    betrag_verarbeiten(betrag)  {
+        return parseFloat(betrag.replace(",", ".")) * 100;
     },
 
     eintraege_sortieren()   {
@@ -32,7 +36,7 @@ const haushaltsbuch = {
         this.eintraege.forEach(function(eintrag) {
             console.log(`Titel: ${eintrag.get("titel")}\n`
             + `Buchungytyp: ${eintrag.get("typ")}\n`
-            + `Betrag: ${eintrag.get("betrag")} € Cent\n`
+            + `Betrag: ${(eintrag.get("betrag") / 100).toFixed(2)} €\n`
             + `Datum: ${eintrag.get("datum").toLocalDateString("de-DE", {
                 year: "numeric",
                 month: "long",
@@ -67,10 +71,10 @@ const haushaltsbuch = {
     },
 
     gesamtbilanz_ausgeben() {
-        console.log(`Bilanz: ${this.gesamtbilanz.get("bilanz")} € Cent\n`
-        + `Einnahmen: ${this.gesamtbilanz.get("einnahmen")} € Cent\n`
-        + `Ausgaben: ${this.gesamtbilanz.get("ausgaben")} € Cent\n`
-        + `Bilanz ist positiv: ${this.gesamtbilanz.get("bilanz") >= 0}`
+        console.log(`Bilanz: ${(this.gesamtbilanz.get("bilanz") /100).toFixed(2)} € \n`
+        + `Einnahmen: ${(this.gesamtbilanz.get("einnahmen") /100).toFixed(2)} € \n`
+        + `Ausgaben: ${(this.gesamtbilanz.get("ausgaben") /100).toFixed(2)} € \n`
+        + `Bilanz ist positiv: ${(this.gesamtbilanz.get("bilanz") / 100) >= 0}`
         );
     },
 
