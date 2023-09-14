@@ -7,19 +7,56 @@ const haushaltsbuch = {
 
     eintrag_erfassen()  {
         let neuer_eintrag = new Map();
-        neuer_eintrag.set("titel", prompt("Titel:").trim());
-        neuer_eintrag.set("typ", prompt("Typ (Einnahme oder Ausgabe):").trim());
-        neuer_eintrag.set("betrag", this.betrag_verarbeiten(parseInt(prompt("Betrag (€):").trim())));
-        neuer_eintrag.set("datum", this.datum_verarbeiten(prompt("Datum (JJJJ-MM-TT):").trim()));
+        neuer_eintrag.set("titel", this.titel_verarbeiten(prompt("Titel:").trim()));
+        neuer_eintrag.set("typ", this.typ_verarbeiten(prompt("Typ (Einnahme oder Ausgabe):").trim()));
+        neuer_eintrag.set("betrag", this.betrag_verarbeiten(parseInt(prompt("Betrag (€):"))));
+        neuer_eintrag.set("datum", this.datum_verarbeiten(prompt("Datum (JJJJ-MM-TT):")));
         neuer_eintrag.set("timestamp", Date.now());
         this.eintraege.push(neuer_eintrag);
     },
 
+    titel_verarbeiten(titel)  {
+        titel = titel.trim();
+        if (this.titel_validieren(titel)) {
+            return titel;
+        }   else    {
+            console.log("Kein Titel angegeben!");
+            return false;
+        }
+    },
+
+    titel_validieren(titel)   {
+        if (titel !== "") {
+            return true;
+        } else{
+            return false;
+        }
+    },
+
+    typ_verarbeiten(typ)  {
+        typ = typ.trim().toLowerCase();
+        if (this.titel_validieren(typ)) {
+            return ;
+        }   else    {
+            console.log("Kein validen Typ angegeben!");
+            return false;
+        }
+    },
+
+    typ_validieren(typ)   {
+        if (typ.match(/^(?:Einnahme|Ausgabe)$/) !== null) {
+            return true;
+        } else{
+            return false;
+        }
+    },
+
     betrag_verarbeiten(betrag)  {
+        betrag = betrag.trim();
         if (this.betrag_validieren(betrag)) {
             return parseFloat(betrag.replace(",", ".")) * 100;
         }   else    {
-            console.log(`Ungültiger Betrag: ${betrag} €`);
+            console.log(`Ungültiger Betrag: "${betrag}"`);
             return false;
         }
     },
@@ -33,6 +70,7 @@ const haushaltsbuch = {
     },
 
     datum_verarbeiten(datum)  {
+        datum = datum.trim();
         if (this.datum_validieren(datum)) {
             return new Date(datum);
         }   else    {
@@ -83,12 +121,12 @@ const haushaltsbuch = {
 
         this.eintraege.forEach(function(eintrag)   {
             switch (this.eintrag.get("typ")) {
-                case "Einnahme":
+                case "einnahme":
                     neue_gesamtbilanz.set("einnahmen", neue_gesamtbilanz.get("einnahmen") + eintrag.get("betrag"));
                     neue_gesamtbilanz.set("bilanz", neue_gesamtbilanz.get("bilanz") + eintrag.get("betrag"));
                     neue_gesamtbilanz.bilanz += this.eintrag.get("betrag");
                     break;
-                case "Ausgabe":
+                case "ausgabe":
                     neue_gesamtbilanz.set("ausgaben", neue_gesamtbilanz.get("ausgaben") + eintrag.get("betrag"));
                     neue_gesamtbilanz.set("bilanz", neue_gesamtbilanz.get("bilanz") - eintrag.get("betrag"));
                     break;
