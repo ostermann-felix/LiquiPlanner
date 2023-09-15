@@ -7,12 +7,11 @@ const haushaltsbuch = {
 
     eintrag_erfassen()  {
         let neuer_eintrag = new Map();
-        neuer_eintrag.set("titel", this.titel_verarbeiten(prompt("Titel:").trim()));
-        neuer_eintrag.set("typ", this.typ_verarbeiten(prompt("Typ (Einnahme oder Ausgabe):").trim()));
-        neuer_eintrag.set("betrag", this.betrag_verarbeiten(parseInt(prompt("Betrag (€):"))));
+        neuer_eintrag.set("titel", this.titel_verarbeiten(prompt("Titel:")));
+        neuer_eintrag.set("typ", this.typ_verarbeiten(prompt("Typ (Einnahme oder Ausgabe):")));
+        neuer_eintrag.set("betrag", this.betrag_verarbeiten(prompt("Betrag (€):")));
         neuer_eintrag.set("datum", this.datum_verarbeiten(prompt("Datum (JJJJ-MM-TT):")));
         neuer_eintrag.set("timestamp", Date.now());
-        this.eintraege.push(neuer_eintrag);
         if (this.fehler.length === 0)   {
             this.eintraege.push(neuer_eintrag);
         }   else    {
@@ -42,17 +41,17 @@ const haushaltsbuch = {
 
     typ_verarbeiten(typ)  {
         typ = typ.trim().toLowerCase();
-        if (this.titel_validieren(typ)) {
-            return ;
-        }   else    {
+        if (this.typ_validieren(typ)) {
+            return typ;
+        }   else {
             this.fehler.push("Kein validen Typ angegeben!");
         }
     },
 
     typ_validieren(typ)   {
-        if (typ.match(/^(?:Einnahme|Ausgabe)$/) !== null) {
+        if (typ.match(/^(?:einnahme|ausgabe)$/) !== null) {
             return true;
-        } else{
+        }   else {
             return false;
         }
     },
@@ -68,7 +67,7 @@ const haushaltsbuch = {
     },
 
     betrag_validieren(betrag)   {
-        if (betrag.match(/^\d+(?:?:,|\.)\d\d?)?$/) !== null) {
+        if (betrag.match(/^\d+(?:(?:,|\.)\d\d?)?$/) !== null) {
             return true;
         } else{
             return false;
@@ -95,7 +94,7 @@ const haushaltsbuch = {
 
     eintraege_sortieren()   {
         this.eintraege.sort(function(eintrag_a, eintrag_b)  {
-            if (eintrag_a.get("datum") > eintrag_b.get("datum"))  {
+            if  (eintrag_a.get("datum") > eintrag_b.get("datum"))  {
                 return -1;
             }   else if (eintrag_a.get("datum") < eintrag_b.get("datum")) {
                 return 1;
@@ -130,7 +129,6 @@ const haushaltsbuch = {
                 case "einnahme":
                     neue_gesamtbilanz.set("einnahmen", neue_gesamtbilanz.get("einnahmen") + eintrag.get("betrag"));
                     neue_gesamtbilanz.set("bilanz", neue_gesamtbilanz.get("bilanz") + eintrag.get("betrag"));
-                    neue_gesamtbilanz.bilanz += this.eintrag.get("betrag");
                     break;
                 case "ausgabe":
                     neue_gesamtbilanz.set("ausgaben", neue_gesamtbilanz.get("ausgaben") + eintrag.get("betrag"));
