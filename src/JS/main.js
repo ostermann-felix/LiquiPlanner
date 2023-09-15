@@ -77,7 +77,7 @@ const haushaltsbuch = {
     datum_verarbeiten(datum)  {
         datum = datum.trim();
         if (this.datum_validieren(datum)) {
-            return new Date(datum);
+            return new Date(`${datum} 00:00:00`);
         }   else    {
             this.fehler.push(`Ungültiges Datumsformat: ${datum}`);
             
@@ -110,7 +110,7 @@ const haushaltsbuch = {
             console.log(`Titel: ${eintrag.get("titel")}\n`
             + `Buchungytyp: ${eintrag.get("typ")}\n`
             + `Betrag: ${(eintrag.get("betrag") / 100).toFixed(2)} €\n`
-            + `Datum: ${eintrag.get("datum").toLocalDateString("de-DE", {
+            + `Datum: ${eintrag.get("datum").toLocaleDateString("de-DE", {
                 year: "numeric",
                 month: "long",
                 day: "2-digit"
@@ -125,7 +125,7 @@ const haushaltsbuch = {
         neue_gesamtbilanz.set("bilanz", 0);
 
         this.eintraege.forEach(function(eintrag)   {
-            switch (this.eintrag.get("typ")) {
+            switch (eintrag.get("typ")) {
                 case "einnahme":
                     neue_gesamtbilanz.set("einnahmen", neue_gesamtbilanz.get("einnahmen") + eintrag.get("betrag"));
                     neue_gesamtbilanz.set("bilanz", neue_gesamtbilanz.get("bilanz") + eintrag.get("betrag"));
