@@ -182,7 +182,48 @@ const haushaltsbuch = {
     },
 
     html_gesamtbilanz_generieren() {
+        let gesamtbilanz = document.createElement("aside");
+        gesamtbilanz.setAttribute("id", "gesamtbilanz");
+        let überschrift = document.createElement("h1");
+        überschrift.textContent = "Gesamtbilanz";
+        gesamtbilanz.insertAdjacentElement("afterbegin", überschrift);
 
+        let einnahmen_zeile = document.createElement("div");
+        einnahmen_zeile.setAttribute("class", "gesamtbilanz-zeile einnahmen");
+            let einnahmen_titel = document.createElement("span");
+            einnahmen_titel.textContent = "Einnahmen:";
+            einnahmen_zeile.insertAdjacentElement("afterbegin", einnahmen_titel);
+            let einnahmen_betrag = document.createElement("div");
+            einnahmen_betrag.textContent = `${(this.gesamtbilanz.get("einnahmen") / 100).toFixed(2).replace(/\./, ",")} €`;
+            einnahmen_zeile.insertAdjacentElement("beforeend", einnahmen_betrag);
+        gesamtbilanz.insertAdjacentElement("beforeend", einnahmen_zeile);
+
+        let ausgaben_zeile = document.createElement("div");
+        ausgaben_zeile.setAttribute("class", "gesamtbilanz-zeile ausgaben");
+            let ausgaben_titel = document.createElement("span");
+            ausgaben_titel.textContent = "Ausgaben:";
+            ausgaben_zeile.insertAdjacentElement("afterbegin", ausgaben_titel);
+            let ausgaben_betrag = document.createElement("div");
+            ausgaben_betrag.textContent = `${(this.gesamtbilanz.get("ausgaben") / 100).toFixed(2).replace(/\./, ",")} €`;
+            ausgaben_zeile.insertAdjacentElement("beforeend", ausgaben_betrag);
+        gesamtbilanz.insertAdjacentElement("beforeend", ausgaben_zeile);
+
+        let bilanz_zeile = document.createElement("div");
+        bilanz_zeile.setAttribute("class", "gesamtbilanz-zeile bilanz");
+            let bilanz_titel = document.createElement("span");
+            bilanz_titel.textContent = "Bilanz:";
+            bilanz_zeile.insertAdjacentElement("afterbegin", bilanz_titel);
+            let bilanz_betrag = document.createElement("div");
+            if (this.gesamtbilanz.get("bilanz") >= 0) {
+                bilanz_betrag.betrag.setAttribute("class", "positiv");
+            } else if (this.gesamtbilanz.get("bilanz") < 0) {
+                bilanz_betrag.betrag.setAttribute("class", "negativ");
+            }
+            bilanz_betrag.textContent = `${(this.gesamtbilanz.get("bilanz") / 100).toFixed(2).replace(/\./, ",")} €`;
+            bilanz_zeile.insertAdjacentElement("beforeend", bilanz_betrag);
+        gesamtbilanz.insertAdjacentElement("beforeend", bilanz_zeile);
+    
+        return gesamtbilanz;
     },
 
     gesamtbilanz_anzeigen() {
