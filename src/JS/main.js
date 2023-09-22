@@ -181,12 +181,16 @@ const haushaltsbuch = {
         this.gesamtbilanz = neue_gesamtbilanz;
     },
 
-    gesamtbilanz_ausgeben() {
-        console.log(`Bilanz: ${(this.gesamtbilanz.get("bilanz") /100).toFixed(2)} € \n`
-        + `Einnahmen: ${(this.gesamtbilanz.get("einnahmen") /100).toFixed(2)} € \n`
-        + `Ausgaben: ${(this.gesamtbilanz.get("ausgaben") /100).toFixed(2)} € \n`
-        + `Bilanz ist positiv: ${(this.gesamtbilanz.get("bilanz") / 100) >= 0}`
-        );
+    html_gesamtbilanz_generieren() {
+
+    },
+
+    gesamtbilanz_anzeigen() {
+        document.querySelectorAll("#gesamtbilanz").forEach(function(gesamtbilanz) {
+            gesamtbilanz.remove();
+        });
+        document.querySelector("body").insertAdjacentElement("beforeend", this.html_gesamtbilanz_generieren());
+
     },
 
     eintrag_hinzufuegen()   {
@@ -197,7 +201,7 @@ const haushaltsbuch = {
                 this.eintraege_sortieren();
                 this.eintraege_ausgeben();
                 this.gesamtbilanz_erstellen();
-                this.gesamtbilanz_ausgeben();
+                this.gesamtbilanz_anzeigen();
             }   else    {
                 this.fehler = [];
             }
