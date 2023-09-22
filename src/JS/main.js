@@ -104,19 +104,58 @@ const haushaltsbuch = {
         });
     },
 
-    eintraege_ausgeben()  {
-        console.clear();
-        this.eintraege.forEach(function(eintrag) {
-            console.log(`Titel: ${eintrag.get("titel")}\n`
-            + `Buchungytyp: ${eintrag.get("typ")}\n`
-            + `Betrag: ${(eintrag.get("betrag") / 100).toFixed(2)} €\n`
-            + `Datum: ${eintrag.get("datum").toLocaleDateString("de-DE", {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-            })}`);
+    html_eintrag_generieren(eintrag) {
+        let listenpunkt = document.createElement("li");
+        if (eintrag.get("typ") === "einnahme") {
+            listenpunkt.setAttribute("class", "einnahme");
+        } else if (eintrag.get("typ") === "ausgabe") {
+            listenpunkt.setAttribute("class", "ausgabe");
+        }
+        listenpunkt.setAttribute("data-timestamp", eintrag.get("timestamp"));
+
+        let datum = document.createElement("span");
+        datum.setAttribute("class", "datum");
+        datum.textContent = eintrag.get("datum").toLocalDateString("de-DE", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
         });
-    },  
+        listenpunkt.insertAdjacentElement("afterbegin", datum);
+
+        let titel = document.createElement("span");
+        titel.setAttribute("class", "titel");
+        titel.textContent = eintrag.get("titel");
+        datum.insertAdjacentElement("afterend", titel);
+
+        let betrag = document.createElement("span");
+        betrag.setAttribute("class", "betrag");
+        betrag.textContent = `${(eintrag.get(betrag) / 100).toFixed(2).replace(/\./, ",")} €`;
+        titel.insertAdjacentElement("afterend", betrag);
+
+        let button = document.createElement("button");
+        button.setAttribute("class", "entfernen-button");
+        betrag.insertAdjacentElement("afterend", button);
+        let trash_icon = document.createElement("i");
+        trash_icon.setAttribute("class", "fas fa-trash");
+        button.insertAdjacentElement("afterbegin", icon);
+
+        return listenpunkt;
+    },
+
+    eintraege_anzeigen()    {
+        document.querySelectorAll(".monatsliste ul").forEach(function(eintragsliste) {
+            eintragsliste.remove();
+        });
+        
+        let eintragsliste = document.createElement("ul");
+        for(let eintrag of this.eintraege) {
+            eintragsliste.insertAdjacentElement("befordeend", this.html_eintrag_generieren(eintrag));
+
+        }
+        document.querySelector(".monatsliste").insertAdjacentElement("afterbegin", eintragsliste);
+    },
+
+
 
     gesamtbilanz_erstellen()    {
         let neue_gesamtbilanz = new Map();
