@@ -216,11 +216,10 @@ const haushaltsbuch = {
             let bilanz_betrag = document.createElement("div");
             if (this.gesamtbilanz.get("bilanz") >= 0) {
                 bilanz_betrag.betrag.setAttribute("class", "positiv");
-                bilanz_betrag.textContent = `${(this.gesamtbilanz.get("bilanz") / 100).toFixed(2).replace(/\./, ",")} €`;
             } else if (this.gesamtbilanz.get("bilanz") < 0) {
                 bilanz_betrag.betrag.setAttribute("class", "negativ");
-                bilanz_betrag.textContent = `-${(this.gesamtbilanz.get("bilanz") / 100).toFixed(2).replace(/\./, ",")} €`;
             }
+            bilanz_betrag.textContent = `${(this.gesamtbilanz.get("bilanz") / 100).toFixed(2).replace(/\./, ",")} €`;
             bilanz_zeile.insertAdjacentElement("beforeend", bilanz_betrag);
         gesamtbilanz.insertAdjacentElement("beforeend", bilanz_zeile);
     
