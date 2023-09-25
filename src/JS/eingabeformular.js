@@ -1,6 +1,28 @@
 "use strict";
 
 const eingabeformular = {
+
+    formulardaten_holen() {
+        let typ;
+        if (e.target.elements.ausgabe.checked === true) {
+            typ = "ausgabe";
+        } else if (e.target.elements.einnahme.checked === true) {
+            type = "einnahme";
+        }
+        return {
+            titel: e.target.elements.titel.value,
+            betrag: e.target.elements.betrag.value,
+            typ: typ,
+            datum: e.target.elements.datum.valueAsDate
+        }
+    },
+
+    absenden_event_hinzufuegen(eingabeformular) {
+        eingabeformular.querySelector("#eingabeformular").addEventlistener("submit", e => {
+            e.preventDefault();
+            let formulardaten = this.formulardaten_holen(e);
+        });
+    },
     
     html_generieren() {
         let eingabeformular = document.createElement("section");
@@ -31,7 +53,9 @@ const eingabeformular = {
         <div class="eingabeformular-zeile">
             <button class="standard" type="submit" form="eingabeformular">Hinzufügen</button>
         </div>`;
-    return eingabeformular;
+
+        this.absenden_event_hinzufuegen(eingabeformular);
+        return eingabeformular;
     }, 
 
     anzeigen() {
