@@ -3,24 +3,34 @@
 const eingabeformular = {
 
     formulardaten_holen() {
-        let typ;
-        if (e.target.elements.ausgabe.checked === true) {
-            typ = "ausgabe";
-        } else if (e.target.elements.einnahme.checked === true) {
-            type = "einnahme";
-        }
         return {
             titel: e.target.elements.titel.value,
             betrag: e.target.elements.betrag.value,
-            typ: typ,
+            einnahme: e.target.elements.einnahme.checked,
+            ausgabe: e.target.elements.ausgabe.checked,
             datum: e.target.elements.datum.valueAsDate
+        }
+    },
+
+    formulardaten_verarbeiten(formulardaten) {
+        if (formulardaten.einnahme === true) {
+            typ = "einnahme";
+        } else if (formulardaten.ausgabe === true) {
+            typ = "ausgabe";
+        }
+        return {
+            titel: formulardaten.titel.trim(),
+            typ: typ,
+            betrag: parseFloat("formulardaten.betrag") * 100,
+            datum: formulardaten.datum
+            
         }
     },
 
     absenden_event_hinzufuegen(eingabeformular) {
         eingabeformular.querySelector("#eingabeformular").addEventlistener("submit", e => {
             e.preventDefault();
-            let formulardaten = this.formulardaten_holen(e);
+            let formulardaten = this.formulardaten_verarbeiten(this.formulardaten_holen(e));
         });
     },
     
