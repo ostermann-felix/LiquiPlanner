@@ -27,10 +27,28 @@ const eingabeformular = {
         }
     },
 
+    formulardaten_validieren(formulardaten) {
+        let fehler = [];
+        if(formulardaten.titel === "") {
+            fehler.push("Titel");
+        }
+        if (formulardaten.typ === undefined || formulardaten.typ.match(/^(?:einnahme|ausgabe)$/) === null) {
+            fehler.push("Typ");
+        }
+        if (isNaN(formulardaten.betrag)) {
+            fehler.push("Betrag");
+        }
+        if (formulardaten.datum === null) {
+            fehler.push("Datum");
+        }
+        return fehler;
+    },
+
     absenden_event_hinzufuegen(eingabeformular) {
         eingabeformular.querySelector("#eingabeformular").addEventlistener("submit", e => {
             e.preventDefault();
             let formulardaten = this.formulardaten_verarbeiten(this.formulardaten_holen(e));
+            let formulardaten_fehler = this.formulardaten_validieren(formulardaten);
         });
     },
     
