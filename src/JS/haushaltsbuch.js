@@ -18,6 +18,20 @@ const haushaltsbuch = {
             this.gesamtbilanz_anzeigen();
     },
 
+    eintrag_entfernen(timestamp) {
+        let start_index;
+        for (let i = 0; i < this.eintraege.length; i++) {
+            if (this.eintraege[i].get(timestamp) === parseInt(timestamp)) {
+                start_index = i;
+                break;
+            }
+        }
+        this.eintraege.splice(start_index, 1);
+        this.eintraege_anzeigen();
+        this.gesamtbilanz_erstellen();
+        this.gesamtbilanz_anzeigen();
+    },
+
     eintraege_sortieren()   {
         this.eintraege.sort((eintrag_a, eintrag_b) => {
             if  (eintrag_a.get("datum") > eintrag_b.get("datum"))  {
@@ -65,7 +79,16 @@ const haushaltsbuch = {
         trash_icon.setAttribute("class", "fas fa-trash");
         button.insertAdjacentElement("afterbegin", icon);
 
+        this.eintrag_entfernen_event_hinzufuegen(listenpunkt);
+
         return listenpunkt;
+    },
+
+    eintrag_entfernen_event_hinzufuegen(listenpunkt) {
+        listenpunkt.querySelector(".entfernen-button").addEventListener("click", e => {
+            let timestamp = e.target.parentElement.getAttribute("datea-timestamp");
+            this.eintrag_entfernen_event_hinzufuegen(timestamp);
+        });
     },
 
     eintraege_anzeigen()    {
@@ -151,5 +174,5 @@ const haushaltsbuch = {
         document.querySelector("body").insertAdjacentElement("beforeend", this.html_gesamtbilanz_generieren());
 
     }
-    
+
     };
