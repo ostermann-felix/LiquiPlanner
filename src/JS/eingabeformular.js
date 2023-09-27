@@ -46,7 +46,7 @@ const eingabeformular = {
 
     datum_aktualisieren() {
         let datums_input = document.querySelector("#datum");
-        if (datums_input) !== null {
+        if (datums_input !== null) {
             datums_input.valueAsDate = new Date();
         }
     },
@@ -68,14 +68,7 @@ const eingabeformular = {
     },
     
     html_fehlerbox_generieren(formulardaten_fehler) {
-        <div class="fehlerbox">
-            <span>Es gibt Fehler in folgenden Eingabefeldern:</span>
-            <ul>
-                <li>Titel</li>
-                <li>Betrag</li>
-                <li>Datum</li>
-            </ul>
-        </div>
+        
         let fehlerbox = document.createElement("div");
         fehlerbox.setAttribute("class", "fehlerbox");
 
@@ -96,7 +89,7 @@ const eingabeformular = {
     fehlerbox_anzeigen() {
         let eingabeformular_container = document.querySelector("#eingabeformular-container");
         if (eingabeformular_container !== null) {
-            eingabeformular_container..insertAdjacentElement("afterbegin", this.html_fehlerbox_generieren(formulardaten_fehler));
+            eingabeformular_container.insertAdjacentElement("afterbegin", this.html_fehlerbox_generieren(formulardaten_fehler));
         }
     },
 
