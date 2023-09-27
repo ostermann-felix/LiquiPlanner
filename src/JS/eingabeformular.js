@@ -44,14 +44,69 @@ const eingabeformular = {
         return fehler;
     },
 
+    datum_aktualisieren() {
+        let datums_input = document.querySelector("#datum");
+        if (datums_input) !== null {
+            datums_input.valueAsDate = new Date();
+        }
+    },
+
     absenden_event_hinzufuegen(eingabeformular) {
         eingabeformular.querySelector("#eingabeformular").addEventlistener("submit", e => {
             e.preventDefault();
             let formulardaten = this.formulardaten_verarbeiten(this.formulardaten_holen(e));
             let formulardaten_fehler = this.formulardaten_validieren(formulardaten);
+            if (formulardaten_fehler.length === 0) {
+                haushaltsbuch.eintrag_hinzufuegen(formulardaten);
+                e.target.reset();
+                this.datum_aktualisieren();
+            } else {
+                this.fehlerbox_entfernen();
+                this.fehlerbox_anzeigen(formulardaten_fehler);
+            }
         });
     },
     
+    html_fehlerbox_generieren(formulardaten_fehler) {
+        <div class="fehlerbox">
+            <span>Es gibt Fehler in folgenden Eingabefeldern:</span>
+            <ul>
+                <li>Titel</li>
+                <li>Betrag</li>
+                <li>Datum</li>
+            </ul>
+        </div>
+        let fehlerbox = document.createElement("div");
+        fehlerbox.setAttribute("class", "fehlerbox");
+
+        let fehlertext = document.createElement("span");
+        fehlertext.textContent = "Folgende Fehler wurden nicht korrekt ausgefüllt:";
+        fehlerbox.insertAdjacentElement("afterbegin", fehlertext);
+
+        let fehlerliste = document.createElement("ul");
+        formulardaten_fehler.forEach(fehler => {
+            let fehlerlistenpunkt = document.createElement("li");
+            fehlerlistenpunkt.textContent = fehler;
+            fehlerliste.insertAdjacentElement("beforeend", fehlerlistenpunkt);
+        });
+        fehlerbox.insertAdjacentElement("beforeend", fehlerliste);
+        return fehlerbox;
+    },
+
+    fehlerbox_anzeigen() {
+        let eingabeformular_container = document.querySelector("#eingabeformular-container");
+        if (eingabeformular_container !== null) {
+            eingabeformular_container..insertAdjacentElement("afterbegin", this.html_fehlerbox_generieren(formulardaten_fehler));
+        }
+    },
+
+    fehlerbox_entfernen() {
+        let bestehende_fehlerbox = document.querySelector(".fehlerbox");
+        if (bestehende_fehlerbox !== null) {
+            bestehende_fehlerbox.remove();
+        }
+    },
+
     html_generieren() {
         let eingabeformular = document.createElement("section");
         eingabeformular.setAttribute("id", "eingabeformular-container");
@@ -88,5 +143,6 @@ const eingabeformular = {
 
     anzeigen() {
         document.querySelector("#navigationsleiste").insertAdjacentElement("afterend", this.html_generieren());
+        this.datum_aktualisieren();
     }
 };
