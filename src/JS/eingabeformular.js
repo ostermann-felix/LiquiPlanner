@@ -13,6 +13,7 @@ const eingabeformular = {
     },
 
     formulardaten_verarbeiten(formulardaten) {
+        let typ;
         if (formulardaten.einnahme === true) {
             typ = "einnahme";
         } else if (formulardaten.ausgabe === true) {
@@ -21,7 +22,7 @@ const eingabeformular = {
         return {
             titel: formulardaten.titel.trim(),
             typ: typ,
-            betrag: parseFloat("formulardaten.betrag") * 100,
+            betrag: parseFloat(formulardaten.betrag) * 100,
             datum: formulardaten.datum
             
         }
@@ -52,9 +53,8 @@ const eingabeformular = {
     },
 
     absenden_event_hinzufuegen(eingabeformular) {
-        eingabeformular.querySelector("#eingabeformular").addEventlistener("submit", e => {
-            e.preventDefault();
-            let formulardaten = this.formulardaten_verarbeiten(this.formulardaten_holen(e));
+        eingabeformular.querySelector("#eingabeformular").addEventListener("submit", e => {
+            e.preventDefault();            let formulardaten = this.formulardaten_verarbeiten(this.formulardaten_holen(e));
             let formulardaten_fehler = this.formulardaten_validieren(formulardaten);
             if (formulardaten_fehler.length === 0) {
                 haushaltsbuch.eintrag_hinzufuegen(formulardaten);
@@ -86,7 +86,7 @@ const eingabeformular = {
         return fehlerbox;
     },
 
-    fehlerbox_anzeigen() {
+    fehlerbox_anzeigen(formulardaten_fehler) {
         let eingabeformular_container = document.querySelector("#eingabeformular-container");
         if (eingabeformular_container !== null) {
             eingabeformular_container.insertAdjacentElement("afterbegin", this.html_fehlerbox_generieren(formulardaten_fehler));

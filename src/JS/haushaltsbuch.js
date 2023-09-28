@@ -21,7 +21,7 @@ const haushaltsbuch = {
     eintrag_entfernen(timestamp) {
         let start_index;
         for (let i = 0; i < this.eintraege.length; i++) {
-            if (this.eintraege[i].get(timestamp) === parseInt(timestamp)) {
+            if (this.eintraege[i].get("timestamp") === parseInt(timestamp)) {
                 start_index = i;
                 break;
             }
@@ -55,7 +55,7 @@ const haushaltsbuch = {
 
         let datum = document.createElement("span");
         datum.setAttribute("class", "datum");
-        datum.textContent = eintrag.get("datum").toLocalDateString("de-DE", {
+        datum.textContent = eintrag.get("datum").toLocaleDateString("de-DE", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit"
@@ -77,7 +77,7 @@ const haushaltsbuch = {
         betrag.insertAdjacentElement("afterend", button);
         let trash_icon = document.createElement("i");
         trash_icon.setAttribute("class", "fas fa-trash");
-        button.insertAdjacentElement("afterbegin", icon);
+        button.insertAdjacentElement("afterbegin", trash_icon);
 
         this.eintrag_entfernen_event_hinzufuegen(listenpunkt);
 
@@ -86,8 +86,8 @@ const haushaltsbuch = {
 
     eintrag_entfernen_event_hinzufuegen(listenpunkt) {
         listenpunkt.querySelector(".entfernen-button").addEventListener("click", e => {
-            let timestamp = e.target.parentElement.getAttribute("datea-timestamp");
-            this.eintrag_entfernen_event_hinzufuegen(timestamp);
+            let timestamp = e.target.parentElement.getAttribute("date-timestamp");
+            this.eintrag_entfernen(timestamp);
         });
     },
 
@@ -95,7 +95,7 @@ const haushaltsbuch = {
         document.querySelectorAll(".monatsliste ul").forEach(eintragsliste => eintragsliste.remove());
         let eintragsliste = document.createElement("ul");
         this.eintraege.forEach(eintrag => 
-            eintragsliste.insertAdjacentElement("befordeend", this.html_eintrag_generieren(eintrag))
+            eintragsliste.insertAdjacentElement("beforeend", this.html_eintrag_generieren(eintrag))
             );
         document.querySelector(".monatsliste").insertAdjacentElement("afterbegin", eintragsliste);
     },
