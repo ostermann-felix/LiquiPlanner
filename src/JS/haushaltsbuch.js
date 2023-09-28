@@ -13,7 +13,7 @@ const haushaltsbuch = {
         neuer_eintrag.set("timestamp", Date.now());
             this.eintraege.push(neuer_eintrag);
             this.eintraege_sortieren();
-            this.eintraege_ausgeben();
+            this.eintraege_anzeigen();
             this.gesamtbilanz_erstellen();
             this.gesamtbilanz_anzeigen();
     },
@@ -69,7 +69,7 @@ const haushaltsbuch = {
 
         let betrag = document.createElement("span");
         betrag.setAttribute("class", "betrag");
-        betrag.textContent = `${(eintrag.get(betrag) / 100).toFixed(2).replace(/\./, ",")} €`;
+        betrag.textContent = `${(eintrag.get("betrag") / 100).toFixed(2).replace(/\./, ",")} €`;
         titel.insertAdjacentElement("afterend", betrag);
 
         let button = document.createElement("button");
@@ -86,7 +86,7 @@ const haushaltsbuch = {
 
     eintrag_entfernen_event_hinzufuegen(listenpunkt) {
         listenpunkt.querySelector(".entfernen-button").addEventListener("click", e => {
-            let timestamp = e.target.parentElement.getAttribute("date-timestamp");
+            let timestamp = e.target.parentElement.getAttribute("data-timestamp");
             this.eintrag_entfernen(timestamp);
         });
     },
@@ -158,9 +158,9 @@ const haushaltsbuch = {
             bilanz_zeile.insertAdjacentElement("afterbegin", bilanz_titel);
             let bilanz_betrag = document.createElement("div");
             if (this.gesamtbilanz.get("bilanz") >= 0) {
-                bilanz_betrag.betrag.setAttribute("class", "positiv");
+                bilanz_betrag.setAttribute("class", "positiv");
             } else if (this.gesamtbilanz.get("bilanz") < 0) {
-                bilanz_betrag.betrag.setAttribute("class", "negativ");
+                bilanz_betrag.setAttribute("class", "negativ");
             }
             bilanz_betrag.textContent = `${(this.gesamtbilanz.get("bilanz") / 100).toFixed(2).replace(/\./, ",")} €`;
             bilanz_zeile.insertAdjacentElement("beforeend", bilanz_betrag);
