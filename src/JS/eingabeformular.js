@@ -2,7 +2,7 @@
 
 const eingabeformular = {
 
-    formulardaten_holen() {
+    formulardaten_holen(e) {
         return {
             titel: e.target.elements.titel.value,
             betrag: e.target.elements.betrag.value,
