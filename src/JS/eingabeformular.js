@@ -13,18 +13,11 @@ const eingabeformular = {
     },
 
     formulardaten_verarbeiten(formulardaten) {
-        let typ;
-        if (formulardaten.einnahme === true) {
-            typ = "einnahme";
-        } else if (formulardaten.ausgabe === true) {
-            typ = "ausgabe";
-        }
         return {
             titel: formulardaten.titel.trim(),
-            typ: typ,
+            typ: formulardaten.einnahme === true ? "einnahme" : formulardaten.ausgabe === true ? "ausgabe" : null,
             betrag: parseFloat(formulardaten.betrag) * 100,
             datum: formulardaten.datum
-            
         }
     },
 
@@ -135,7 +128,10 @@ const eingabeformular = {
     }, 
 
     anzeigen() {
-        document.querySelector("#navigationsleiste").insertAdjacentElement("afterend", this.html_generieren());
-        this.datum_aktualisieren();
+        let navigationsleiste = document.querySelector("#navigationsleiste");
+        if (navigationsleiste !== null) {
+            navigationsleiste.insertAdjacentElement("afterend", this.html_generieren());
+            this.datum_aktualisieren();
+        }
     }
 };
