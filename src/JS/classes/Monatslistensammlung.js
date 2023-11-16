@@ -6,6 +6,6 @@
 </section>
 */
 
-class Monatlistensammlung {
-
+class Monatslistensammlung {
+    
 };
