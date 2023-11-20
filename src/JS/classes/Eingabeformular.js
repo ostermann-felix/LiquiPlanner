@@ -51,7 +51,7 @@ class Eingabeformular {
             let formulardaten = this._formulardaten_verarbeiten(this._formulardaten_holen(e));
             let formulardaten_fehler = this._formulardaten_validieren(formulardaten);
             if (formulardaten_fehler.length === 0) {
-                haushaltsbuch._eintrag_hinzufuegen(formulardaten);
+                haushaltsbuch.eintrag_hinzufuegen(formulardaten);
                 let bestehende_fehlerbox = document.querySelector(".fehlerbox");
                 if (bestehende_fehlerbox !== null) {
                     bestehende_fehlerbox.remove();
