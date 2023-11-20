@@ -1,7 +1,7 @@
 "use strict";
 
 class Navigationsleiste {
-    
+
     constructor() {
         this._html = this._html_generieren();
     }
@@ -29,4 +29,6 @@ class Navigationsleiste {
             body.insertAdjacentElement("afterbegin", this._html);
         }
     }
+
+    
 }

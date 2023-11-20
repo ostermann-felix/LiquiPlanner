@@ -2,10 +2,10 @@
 
 class Eintrag {
 
-    constructor(titel, typ, betrag, datum) {
+    constructor(titel, betrag, typ, datum) {
         this._titel = titel;
-        this._typ = typ;
         this._betrag = betrag;
+        this._typ = typ;
         this._datum = datum;
         this._timestamp = Date.now();
         this._html = this._html_generieren();
@@ -15,12 +15,12 @@ class Eintrag {
         return this._titel;
     }
 
-    typ() {
-        return this._typ;
-    }
-
     betrag() {
         return this._betrag;
+    }
+
+    typ() {
+        return this._typ;
     }
 
     datum() {
@@ -35,7 +35,8 @@ class Eintrag {
         return this._html;
     }
 
-    _html_generieren(eintrag) {
+    _html_generieren() {
+
         let listenpunkt = document.createElement("li");
         this._typ === "einnahme" ? listenpunkt.setAttribute("class", "einnahme") : listenpunkt.setAttribute("class", "ausgabe");
         listenpunkt.setAttribute("data-timestamp", this._timestamp);
@@ -62,9 +63,10 @@ class Eintrag {
         let button = document.createElement("button");
         button.setAttribute("class", "entfernen-button");
         betrag.insertAdjacentElement("afterend", button);
-        let trash_icon = document.createElement("i");
-        trash_icon.setAttribute("class", "fas fa-trash");
-        button.insertAdjacentElement("afterbegin", trash_icon);
+
+        let icon = document.createElement("i");
+        icon.setAttribute("class", "fas fa-trash");
+        button.insertAdjacentElement("afterbegin", icon);
 
         this._eintrag_entfernen_event_hinzufuegen(listenpunkt);
 
@@ -77,4 +79,6 @@ class Eintrag {
             haushaltsbuch.eintrag_entfernen(timestamp);
         });
     }
-};
+
+    
+}

@@ -1,6 +1,7 @@
 "use strict";
 
 class Fehler {
+
     constructor(fehlertext, formular_fehler) {
         this._fehlertext = fehlertext;
         this._formular_fehler = formular_fehler;
@@ -22,6 +23,7 @@ class Fehler {
             fehlerliste.insertAdjacentElement("beforeend", fehlerlistenpunkt);
         });
         fehlerbox.insertAdjacentElement("beforeend", fehlerliste);
+
         return fehlerbox;
     }
 
@@ -39,4 +41,6 @@ class Fehler {
             eingabeformular_container.insertAdjacentElement("afterbegin", this._html);
         }
     }
-};
+
+    
+}

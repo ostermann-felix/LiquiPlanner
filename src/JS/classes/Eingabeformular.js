@@ -26,7 +26,7 @@ class Eingabeformular {
 
     _formulardaten_validieren(formulardaten) {
         let fehler = [];
-        if(formulardaten.titel === "") {
+        if (formulardaten.titel === "") {
             fehler.push("Titel");
         }
         if (isNaN(formulardaten.betrag)) {
@@ -47,10 +47,10 @@ class Eingabeformular {
 
     _absenden_event_hinzufuegen(eingabeformular) {
         eingabeformular.querySelector("#eingabeformular").addEventListener("submit", e => {
-            e.preventDefault();            
+            e.preventDefault();
             let formulardaten = this._formulardaten_verarbeiten(this._formulardaten_holen(e));
-            let formulardaten_fehler = this._formulardaten_validieren(formulardaten);
-            if (formulardaten_fehler.length === 0) {
+            let formular_fehler = this._formulardaten_validieren(formulardaten);
+            if (formular_fehler.length === 0) {
                 haushaltsbuch.eintrag_hinzufuegen(formulardaten);
                 let bestehende_fehlerbox = document.querySelector(".fehlerbox");
                 if (bestehende_fehlerbox !== null) {
@@ -59,17 +59,17 @@ class Eingabeformular {
                 e.target.reset();
                 this._datum_aktualisieren();
             } else {
-                let fehler = new Fehler("Folgende Felder wurden nicht korrekt ausgefüllt:", formulardaten_fehler);
+                let fehler = new Fehler("Folgende Felder wurden nicht korrekt ausgefüllt:", formular_fehler);
                 fehler.anzeigen();
-            }
+            }   
         });
     }
 
     _html_generieren() {
+
         let eingabeformular = document.createElement("section");
         eingabeformular.setAttribute("id", "eingabeformular-container");
-        eingabeformular.innerHTML = `
-        <form id="eingabeformular" action="#" method="get"></form>
+        eingabeformular.innerHTML = `<form id="eingabeformular" action="#" method="get"></form>
         <div class="eingabeformular-zeile">
             <h1>Neue Einnahme / Ausgabe hinzufügen</h1>
         </div>
@@ -96,15 +96,17 @@ class Eingabeformular {
         </div>`;
 
         this._absenden_event_hinzufuegen(eingabeformular);
+
         return eingabeformular;
-    } 
+    }
 
     anzeigen() {
         let navigationsleiste = document.querySelector("body");
         if (navigationsleiste !== null) {
             navigationsleiste.insertAdjacentElement("afterbegin", this._html);
             this._datum_aktualisieren();
-        }
+        }      
     }
 
-};
+    
+}
