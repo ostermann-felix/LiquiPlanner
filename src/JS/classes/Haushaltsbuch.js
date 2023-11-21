@@ -4,6 +4,8 @@ class Haushaltsbuch {
 
     constructor() {
         this._eintraege = [];
+        this._navigationsleiste = new Navigationsleiste();
+        this._eingabeformular = new Eingabeformular();
         this._monatslistensammlung = new Monatslistensammlung();
         this._gesamtbilanz = new Gesamtbilanz();
     }
@@ -16,7 +18,7 @@ class Haushaltsbuch {
             formulardaten.datum
         );
         this._eintraege.push(neuer_eintrag);
-        this._monatslistensammlung.eintrag_hinzufuegen(neuer_eintrag);
+        this._monatslistensammlung.aktualisieren(this._eintraege);
         this._gesamtbilanz.aktualisieren(this._eintraege);
     }
 
@@ -29,10 +31,13 @@ class Haushaltsbuch {
             }
         }
         this._eintraege.splice(start_index, 1);
+        this._monatslistensammlung.aktualisieren(this._eintraege);
         this._gesamtbilanz.aktualisieren(this._eintraege);
     }
 
-    anzeigen() {
+    start() {
+        this._navigationsleiste.anzeigen();
+        this._eingabeformular.anzeigen();
         this._monatslistensammlung.anzeigen();
         this._gesamtbilanz.anzeigen();
     }

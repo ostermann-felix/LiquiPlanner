@@ -53,7 +53,6 @@ class Monatsliste {
             }
         });
         this._bilanz = monatsbilanz;
-
     }
 
     _html_generieren() {
@@ -96,4 +95,6 @@ class Monatsliste {
         this._bilanzieren();
         this._html = this._html_generieren();
     }
+
+    
 }
