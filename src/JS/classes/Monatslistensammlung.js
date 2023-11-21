@@ -22,8 +22,7 @@ class Monatslistensammlung {
         if (!monatsliste_vorhanden) {
             this._monatsliste_hinzufuegen(eintragsjahr, eintragsmonat, eintrag);
         }
-            // wenn vorhanden: Eintrag zu Monatsliste hinzufuegen -> monatsliste.eintrag_hinzufuegen(eintrag)
-            // wenn NICHT vorhanden: neue Monatsliste instaziieren -> this._monatsliste_hinzufuegen()
+        this._aktualisieren();
     }
 
     _monatsliste_hinzufuegen(jahr, monat, eintrag) {
@@ -38,6 +37,11 @@ class Monatslistensammlung {
         this._monatslisten.forEach(monatsliste => monatslisten.insertAdjacentElement("beforeend", monatsliste.html()));
 
         return monatslisten;
+    }
+
+    _aktualisieren() {
+        this._html = this._html_generieren();
+        this.anzeigen();
     }
 
     anzeigen() {

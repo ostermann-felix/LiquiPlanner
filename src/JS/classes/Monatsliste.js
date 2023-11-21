@@ -23,6 +23,7 @@ class Monatsliste {
 
     eintrag_hinzufuegen(eintrag) {
         this._eintraege.push(eintrag);
+        this._aktuallisieren();
     }
 
     _html_generieren() {
@@ -44,6 +45,7 @@ class Monatsliste {
         } else {
             monatsbilanz.setAttribute("class", "monatsbilanz negativ");
         }
+        monatsbilanz.textContent = `${this._bilanz.toFixed(2)} €`;
         ueberschrift.insertAdjacentElement("beforeend", monatsbilanz);
         monatsliste.insertAdjacentElement("afterbegin", ueberschrift);
 
@@ -52,6 +54,10 @@ class Monatsliste {
         monatsliste.insertAdjacentElement("beforeend", eintragsliste);
 
         return monatsliste;
+    }
+
+    _aktuallisieren() {
+        this._html = this._html_generieren();
     }
 
     
