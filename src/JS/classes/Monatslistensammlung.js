@@ -20,22 +20,35 @@ class Monatslistensammlung {
             }
         });
         if (!monatsliste_vorhanden) {
-            this._monatsliste_hinzufuegen();
+            this._monatsliste_hinzufuegen(eintragsjahr, eintragsmonat, eintrag);
         }
             // wenn vorhanden: Eintrag zu Monatsliste hinzufuegen -> monatsliste.eintrag_hinzufuegen(eintrag)
             // wenn NICHT vorhanden: neue Monatsliste instaziieren -> this._monatsliste_hinzufuegen()
     }
 
-    _monatsliste_hinzufuegen() {
-        
+    _monatsliste_hinzufuegen(jahr, monat, eintrag) {
+        let neue_monatsliste = new Monatsliste(jahr, monat);
+        neue_monatsliste.eintrag_hinzufuegen(eintrag);
+        this._monatslisten.push(neue_monatsliste);
     }
 
     _html_generieren() {
-        
+        let monatslisten = document.createElement("section");
+        monatslisten.setAttribute("id", "monatslisten");
+        this._monatslisten.forEach(monatsliste => monatslisten.insertAdjacentElement("beforeend", monatsliste.html()));
+
+        return monatslisten;
     }
 
     anzeigen() {
-
+        let eingabeformular_container = document.querySelector("#eingabeformular-container");
+        let monatslistensammlung = document.querySelector("#monatslisten");
+        if (eingabeformular_container !== null) {
+            if (monatslistensammlung !== null) {
+                monatslistensammlung.remove();
+            }
+            eingabeformular_container.insertAdjacentElement("afterend", this._html);
+        }
     }
 
     
