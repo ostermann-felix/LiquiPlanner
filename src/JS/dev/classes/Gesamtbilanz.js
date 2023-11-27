@@ -73,11 +73,15 @@ export default class Gesamtbilanz {
         return gesamtbilanz;
     }
 
-    anzeigen() {
+    _entfernen() {
         let gesamtbilanz = document.querySelector("#gesamtbilanz");
         if (gesamtbilanz !== null) {
             gesamtbilanz.remove();
         }
+    }
+
+    anzeigen() {
+        this._entfernen();
         document.querySelector("body").insertAdjacentElement("beforeend", this._html);
     }
 

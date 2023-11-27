@@ -1,5 +1,5 @@
 
-export default class Fehler {
+export default class Fehlerbox {
 
     constructor(fehlertext, formular_fehler) {
         this._fehlertext = fehlertext;

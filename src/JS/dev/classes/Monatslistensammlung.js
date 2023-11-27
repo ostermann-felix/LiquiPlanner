@@ -64,16 +64,18 @@ export default class Monatslistensammlung {
         this.anzeigen();
     }
 
-    anzeigen() {
-        let eingabeformular_container = document.querySelector("#eingabeformular-container");
+    _entfernen() {
         let monatslistensammlung = document.querySelector("#monatslisten");
-        if (eingabeformular_container !== null) {
-            if (monatslistensammlung !== null) {
-                monatslistensammlung.remove();
-            }
-            eingabeformular_container.insertAdjacentElement("afterend", this._html);
+        if (monatslistensammlung !== null) {
+            monatslistensammlung.remove();
         }
     }
 
-    
+    anzeigen() {
+        let eingabeformular_container = document.querySelector("#eingabeformular-container");
+        if (eingabeformular_container !== null) {
+            this._entfernen();
+            eingabeformular_container.insertAdjacentElement("afterend", this._html);
+        }
+    }
 }

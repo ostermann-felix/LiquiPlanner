@@ -1,17 +1,35 @@
-import Fehler from "./Fehler.js"
-import haushaltsbuch from "./../main.js";
+/**
+ * Das Modul Eingabeformular ist für das Eingabeformular der Anwendung zuständig.
+ * @module classes/Eingabeformular
+ */
+
+import Fehlerbox from "./Fehlerbox.js"
+import liqui_planner from "../liqui-planner.js";
+
+/**
+ * Die Klasse Eingabeformular stellt alle Eigenschaften und Methoden des Eingabeformulars zur Verfügung.
+ */
 export default class Eingabeformular {
 
+    /**
+     * Der Construktor generiert bei Instanziierung ein HTML-Element, das das Eingabeformular darstellt.
+     * @prop {Element} _html - das HTML-Element, das das Eingabeformular darstellt
+     */
     constructor() {
         this._html = this._html_generieren();
     }
 
-    _formulardaten_holen(e) {
+    /**
+     * Diese private Methode extrahiert die im Eingabeformular eingegebenen Daten aus dem Submit-Event des Eingabeformulars.
+     * @param {Event} submit_event - das Submit-Event des Eingabeformulars
+     * @returns {Object} - einfaches Objekt mit den Rohdaten aus dem Eingabeformular  
+     */
+    _formulardaten_holen(submit_event) {
         return {
-            titel: e.target.elements.titel.value,
-            betrag: e.target.elements.betrag.value,
-            einnahme: e.target.elements.einnahme.checked,
-            datum: e.target.elements.datum.valueAsDate
+            titel: submit_event.target.elements.titel.value,
+            betrag: submit_event.target.elements.betrag.value,
+            einnahme: submit_event.target.elements.einnahme.checked,
+            datum: submit_event.target.elements.datum.valueAsDate
         }
     }
 
@@ -51,7 +69,7 @@ export default class Eingabeformular {
             let formulardaten = this._formulardaten_verarbeiten(this._formulardaten_holen(e));
             let formular_fehler = this._formulardaten_validieren(formulardaten);
             if (formular_fehler.length === 0) {
-                haushaltsbuch.eintrag_hinzufuegen(formulardaten);
+                liqui_planner.eintrag_hinzufuegen(formulardaten);
                 let bestehende_fehlerbox = document.querySelector(".fehlerbox");
                 if (bestehende_fehlerbox !== null) {
                     bestehende_fehlerbox.remove();
@@ -59,7 +77,7 @@ export default class Eingabeformular {
                 e.target.reset();
                 this._datum_aktualisieren();
             } else {
-                let fehler = new Fehler("Folgende Felder wurden nicht korrekt ausgefüllt:", formular_fehler);
+                let fehler = new Fehlerbox("Folgende Felder wurden nicht korrekt ausgefüllt:", formular_fehler);
                 fehler.anzeigen();
             }   
         });
@@ -86,9 +104,9 @@ export default class Eingabeformular {
         <div class="eingabeformular-zeile">
             <div class="betrag-datum-eingabe-gruppe">
                 <label for="betrag">Betrag</label>
-                <input type="number" id="betrag" name="betrag" form="eingabeformular" placeholder="z.B. 10,42" size="10" step="0.01" title="Betrag des Eintrags (max. zwei Nachkommastellen, kein €-Zeichen)">
+                <input type="number" id="betrag" name="betrag" form="eingabeformular" placeholder="z.B. 10,42" size="10" step="0.01" min="0.01" title="Betrag des Eintrags (max. zwei Nachkommastellen, kein €-Zeichen)">
                 <label for="datum">Datum</label>
-                <input type="date" id="datum" name="datum" form="eingabeformular" placeholder="jjjj-mm-tt" size="10" title="Datum des Eintrags (Format: jjjj-mm-tt)">
+                <input type="date" id="datum" name="datum" form="eingabeformular" size="10" title="Datum des Eintrags">
             </div>
         </div>
         <div class="eingabeformular-zeile">
@@ -101,9 +119,9 @@ export default class Eingabeformular {
     }
 
     anzeigen() {
-        let navigationsleiste = document.querySelector("body");
+        let navigationsleiste = document.querySelector("#navigationsleiste");
         if (navigationsleiste !== null) {
-            navigationsleiste.insertAdjacentElement("afterbegin", this._html);
+            navigationsleiste.insertAdjacentElement("afterend", this._html);
             this._datum_aktualisieren();
         }      
     }
