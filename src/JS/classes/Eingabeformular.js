@@ -1,6 +1,6 @@
-"use strict";
-
-class Eingabeformular {
+import Fehler from "./Fehler.js"
+import haushaltsbuch from "./../main.js";
+export default class Eingabeformular {
 
     constructor() {
         this._html = this._html_generieren();
